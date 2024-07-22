@@ -98,29 +98,36 @@ This first task will assist you with running the included `server.exe` and `clie
      ./client.exe 02
      ```
 
+### Modifying the Project
+During the following tasks you will be required to make changes to the project to add functionality to the `client.exe` application.
+
+Start by opening `src/tasks.c`. The client application makes calls to `run_task()`, this is the entrypoint for your solutions. You should implement your task solutions to the switch/case block contained in this function. **We've provided the solution to Task #01 as an example**.
+
+After you've made your additions to `src/tasks.c` rebuild the project, as described below. 
+
 ### Building the Project
 
-After modifying the included `.c`/`.h` files you will need to rebuild your `client.exe`. You can do this with the included Dockerfile, or by using the Makefile directly using MINGW32/MSYS2.
+After modifying the included `.c`/`.h` files you will need to rebuild your `client.exe`. You can do this with the included Dockerfile, or by using the Makefile (using MINGW32/MSYS2, etc).
 
-This project assumes you are using WINDOWS. If this is not the case and/or you are not able to put together a working environemnt please do your best to continue. You can use the examples provided in this README as placeholder data.
+This project assumes you are using WINDOWS. If this is not the case and/or you are not able to put together a working environment please do your best to continue. You can use the examples provided in this README as placeholder data.
 
 #### With the Included Dockerfile
 
    - Install docker as required for your computer ([Docker Desktop for Windows](https://docs.docker.com/desktop/install/windows-install/))
    - In a terminal or shell navigate to the project directory
    - Build the image:
-    ```sh
-    docker build -t tz-eval .
-    ```
+     ```sh
+     docker build -t tz-eval .
+     ```
    - Create a container with the name `tz-eval-builder`:
-    ```sh
-    docker rm -f tz-eval-builder
-    docker create --name tz-eval-builder tz-eval
-    ```
+     ```sh
+     docker rm -f tz-eval-builder
+     docker create --name tz-eval-builder tz-eval
+     ```
    - Copy the compiled `client.exe` out of the container
-    ```sh
-    docker cp tz-eval-builder:/client.exe ./client.exe
-    ```
+     ```sh
+     docker cp tz-eval-builder:/client.exe ./client.exe
+     ```
 
 #### Using the Included Makefile
 
@@ -159,14 +166,6 @@ This project assumes you are using WINDOWS. If this is not the case and/or you a
      ```
      make clean run
      ```
-
-### Modifying the Project
-
-During the following tasks you will be required to make changes to the project to add functionality to the `client.exe` application.
-
-Start by opening `src/tasks.c`. This is where you will be implementing your solutions. The client application makes calls to `run_task()`, you should implement your task solutions to the switch/case block contained in this function. We've provided the solution to Task #01 as an example.
-
-After you've made changes to `src/tasks.c` you should rebuild the project, as described above, and run it. 
 
 ## Task #01 - Ping (Initial State)
 Send a "Ping" command to the server and receive the response.
