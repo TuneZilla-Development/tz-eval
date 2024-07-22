@@ -250,7 +250,7 @@ Note, be sure to include the header (0x02) in your request. You **should** imple
 ```
 --> 02 20 03
 
-<-- 10 15 60 03 ?? ?? ?? ??
+<-- 10 14 60 03 ?? ?? ?? ??
 <-- 21 ?? ?? ?? ?? ?? ?? ??
 <-- 22 ?? ?? ?? ?? ?? ?? ??
 <-- 23 ??
@@ -274,7 +274,7 @@ Note, you **should** implement the checksum calculation as part of your solution
 
 #### Example 1 (Correct Checksum / Data Accepted):
 ```
---> 10 17 21 04 xx xx xx xx
+--> 10 16 21 04 xx xx xx xx
 --> 21 xx xx xx xx xx xx xx
 --> 22 xx xx xx xx xx xx xx
 --> 23 xx xx CS
@@ -284,7 +284,7 @@ Note, you **should** implement the checksum calculation as part of your solution
 
 // Optionally read the data back with the "Read" command
 --> 02 20 04
-<-- 10 16 60 04 xx xx xx xx
+<-- 10 15 60 04 xx xx xx xx
 <-- 21 xx xx xx xx xx xx xx
 <-- 22 xx xx xx xx xx xx xx
 <-- 23 xx xx
@@ -293,7 +293,7 @@ Note, you **should** implement the checksum calculation as part of your solution
 #### Example 2 (Incorrect Checksum / Data Rejected):
 Note, Refer to the "Negative Response Code" Table to help with debugging the server's response.
 ```
---> 10 17 21 04 xx xx xx xx
+--> 10 16 21 04 xx xx xx xx
 --> 21 xx xx xx xx xx xx xx
 --> 22 xx xx xx xx xx xx xx
 --> 23 xx xx CS
@@ -327,7 +327,7 @@ Note, the seed values returned by the server are random. The following example i
 
 // Read protected data
 --> 02 20 05
-<-- 10 15 60 05 ?? ?? ?? ??
+<-- 10 14 60 05 ?? ?? ?? ??
 <-- 21 ?? ?? ?? ?? ?? ?? ??
 <-- 22 ?? ?? ?? ?? ?? ?? ??
 <-- 23 ??
