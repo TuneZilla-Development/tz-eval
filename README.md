@@ -43,9 +43,11 @@ Of these files you should only need to edit `src/task.c`. Please **do not** modi
 
 # Tasks
 
-These series of tasks will walk you through the implementation of a hypothetical communication protocol. This protocol facilitates the communication between a client (your application) and a server (provided by us). 
+These series of tasks will walk you through the implementation of a hypothetical communication protocol. This protocol facilitates the communication between a client (your application) and a server (provided by us).
 
-It is your job to implement the necessary functionality to `client.exe` so that it can communicate with the provided `server.exe` in order to complete the given tasks. It is advised that you complete the given tasks in order as they are designed to incrementally build on eachother. The ideal solution should be capable of completing all the included tasks without human intervention.
+It is your job to add functionality to `client.exe` so it can interface with the provided `server.exe` to complete the provided tasks. Each task introduces new challenges and features that your solutions must support. These tasks build on one another, so it is recommended to complete them in sequence.
+
+Focus on creating a modular function library rather than a final program. The ideal solution should implement the required functionality to complete all the included tasks while still being easily maintainable, reusable, and expandable.
 
 ## Task #00 - Getting Started
 
@@ -170,11 +172,11 @@ This project assumes you are using WINDOWS. If this is not the case and/or you a
 ## Task #01 - Ping (Initial State)
 Send a "Ping" command to the server and receive the response.
 
-Using the included msg_send() function the client (your application) will send a "Ping" request to the server. The server will reply with the "Positive Response Code" for the Ping command
+Using the included `msg_send()` function the client (your application) will send a "Ping" request to the server. The server will reply with the "Positive Response Code" for the Ping command
 
-The client (your application) will send a "Ping" to the server using the provided msg_send() function. The server will reply to the  Ping with the positive Ping response (0x50 or CID + 0x40). Receive this message using the provided msg_recv() function.
+The client (your application) will send a "Ping" to the server using the provided `msg_send()` function. The server will reply to the  Ping with the positive Ping response (`0x50` or `CID + 0x40`). Receive this message using the provided `msg_recv()` function.
 
-Note, be sure to include the first byte (0x01). This is part of our protocol and will be explained later.
+Note, be sure to include the first byte (`0x01`). This is part of our protocol and will be explained later.
 
 #### Example:
 ```
@@ -185,9 +187,9 @@ Note, be sure to include the first byte (0x01). This is part of our protocol and
 ## Task #02 - Retry on Timeout
 Implement logic for handling a timeout.
 
-If you do not receive a timeout within the timeout period (1s) msg_recv() will return a MSG_TIMEOUT (2) error. In this case we assume the server did not receive our initial request and we should retry the same message again.
+If you do not receive a response within the timeout period (1s) `msg_recv()` will return a MSG_TIMEOUT (2) error. In this case we assume the server did not receive our initial request and we should retry the same message again.
 
-Note, be sure to include the first byte (0x01). This is part of our protocol and will be explained later.
+Note, be sure to include the first byte (`0x01`). This is part of our protocol and will be explained later.
 
 #### Example:
 ```
@@ -201,11 +203,11 @@ Note, be sure to include the first byte (0x01). This is part of our protocol and
 
 Use the "Read" command to read data from the server, decode and print the result as a string.
 
-The "Read" (0x20) command takes a "Data Identifier" parameter immediately following the Command ID. This identifier specifies which data should be returned by the server. Upon receiving a valid request the server will reply with the requested data. For this task use a data identifier of `0x01` and print the result as a string. 
+The "Read" (`0x20`) command takes a "Data Identifier" parameter immediately following the Command ID. This identifier specifies which data should be returned by the server. Upon receiving a valid request the server will reply with the requested data. For this task use a data identifier of `0x01` and print the result as a string. 
 
 Note, the server will send a Positive Response byte **and echo the data identifier**, both of these bytes are not part of the result and should not be printed.
 
-Note, be sure to include the first byte (0x02). This is part of our protocol and will be explained later.
+Note, be sure to include the first byte (`0x02`). This is part of our protocol and will be explained later.
 
 #### Example:
 ```
@@ -220,11 +222,11 @@ Note, be sure to include the first byte (0x02). This is part of our protocol and
 
 Implement support for receiving packets spread across multiple messages/frames.
 
-msg_send() and msg_recv() are limited to 8 bytes per message or "frame" (similar to CAN2.0). To work around this limitation our protocol uses a simple header byte at the start of every message. This header byte contains an opcode and the total length of data. Up until now this header byte has been hardcoded into our messages. Refer to the "Transport / Packet Layer" section for more information.
+`msg_send()` and `msg_recv()` are limited to 8 bytes per message or "frame" (similar to CAN2.0). To work around this limitation our protocol uses a simple header byte at the start of every message. This header byte contains an opcode and the total length of data. Up until now this header byte has been hardcoded into our messages. Refer to the "Transport / Packet Layer" section for more information.
 
-For this task use a data identifier of 0x02 and print the result as a string. The result will be spread across multiple frames. Do not print the header bytes.
+For this task use a data identifier of `0x02` and print the result as a string. The result will be spread across multiple frames. Do not print the header bytes.
 
-Note, be sure to include the header (0x02) in your request. You can start to implement support for packets in your "send command" functions. Refer to the "Transport / Packet Layer" section for more information.
+Note, be sure to include the header (`0x02`) in your request. You can start to implement support for packets in your "send command" functions. Refer to the "Transport / Packet Layer" section for more information.
 
 #### Example:
 ```
@@ -240,11 +242,11 @@ Note, be sure to include the header (0x02) in your request. You can start to imp
 
 Implement support for receiving packets longer than 15 bytes.
 
-msg_send() and msg_recv() are limited to 8 bytes per message or "frame" (similar to CAN2.0). To work around this limitation our protocol uses a simple header byte at the start of every message. This header byte contains an opcode and the total length of data. Up until now this header byte has been hardcoded into our messages. Refer to the "Transport / Packet Layer" section for more information.
+`msg_send()` and `msg_recv()` are limited to 8 bytes per message or "frame" (similar to CAN2.0). To work around this limitation our protocol uses a simple header byte at the start of every message. This header byte contains an opcode and the total length of data. Up until now this header byte has been hardcoded into our messages. Refer to the "Transport / Packet Layer" section for more information.
 
-For this task use a data identifier of 0x03 and print the result as a string. The result will be spread across multiple frames and is longer than . Do not print the header / length bytes.
+For this task use a data identifier of `0x03` and print the result as a string. The result will be spread across multiple frames and is longer than . Do not print the header / length bytes.
 
-Note, be sure to include the header (0x02) in your request. You **should** implement packet support in your "send command" functions. Refer to the "Transport / Packet Layer" section for more information.
+Note, be sure to include the header (`0x02`) in your request. You **should** implement packet support in your "send command" functions. Refer to the "Transport / Packet Layer" section for more information.
 
 #### Example:
 ```
@@ -263,9 +265,9 @@ Note, be sure to include the header (0x02) in your request. You **should** imple
 
 Use the "Write" command to write data to the server. Calculate and send the required checksum.
 
-The "Write" (0x21) command takes 3 parameters; The first parameter is the "Data Identifier" which specifies what the data is/where it should be written to; The second parameter is the Data which is being written; And the final parameter is an 8-bit checksum.
+The "Write" (`0x21`) command takes 3 parameters; The first parameter is the "Data Identifier" which specifies what the data is/where it should be written to; The second parameter is the Data which is being written; And the final parameter is an 8-bit checksum.
 
-For this task use a **data identifier of 0x04** and **send exactly 20 bytes**, the contents is up to you. Be sure to calculate and include the checksum according to the following definition:
+For this task use a **data identifier of `0x04`** and **send exactly 20 bytes**, the contents is up to you. Be sure to calculate and include the checksum according to the following definition:
 ```c
 CHECKSUM = INVERSE(SUM8(data))
 ```
@@ -305,12 +307,12 @@ Note, Refer to the "Negative Response Code" Table to help with debugging the ser
 
 Use the "Seed" and "Auth" commands to authenticate your client with the server. Read the seed from the server, calculate and send the key back.
 
-The "Seed" (0x30) command returns two 32-bit integers (big-endian), these are the seed values to use with your key calculation. The client should calculate the 32-bit key according to the following definition:
+The "Seed" (`0x30`) command returns two 32-bit integers (big-endian), these are the seed values to use with your key calculation. The client should calculate the 32-bit key according to the following definition:
 ```c
 KEY = XOR(ADD(SEED[0],SWAP(SEED[1])),0x20240701);
 ```
 
-Once calculated, the client uses the "Auth" (0x31) command to send the key for validation (big-endian). If correct, the server will respond with a Positive Request. Once authenticated the client can use the "Read" (0x20) command to access Data Identifier `0x50`, for this task print the result of this read command as a string. 
+Once calculated, the client uses the "Auth" (`0x31`) command to send the key for validation (big-endian). If correct, the server will respond with a Positive Request. Once authenticated the client can use the "Read" (`0x20`) command to access Data Identifier `0x50`, for this task print the result of this read command as a string. 
 
 Note, the seed values returned by the server are random. The following example is for reference only.
 
