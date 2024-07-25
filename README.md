@@ -363,9 +363,9 @@ Format [Length] Data..
 
 ### Format Byte
 
-The purpose of the Format Byte is to tell the receiving client/server how to interpret this message frame and in some cases the messages which follow. It's primarily use is to link multiple frames together to form packets larger than 8 bytes.
+The purpose of the Format Byte is to tell the receiving client/server how to interpret this message frame and in some cases the messages which follow. It's primarily used to link multiple frames together to form packets larger than 8 bytes.
 
-The format byte is divided into two 4-bit nibbles. The first of which is the Frame "Opcode". This Opcode tells the receiving client/server how to interpret this message frame and in some cases the messages which follow. Depending 
+The format byte is divided into two 4-bit nibbles. The first of which is the Frame "Opcode". This Opcode tells the receiving client/server how to interpret this message frame and in some cases the messages which follow. 
 
 There are three Opcodes defined by this protocol. Depending on the Opcode, the second 4-bit nibble encodes the `Length` of Packet* or the `Sequence Number`: 
 
@@ -392,9 +392,9 @@ An Opcode of `0` indicates that the packet is fully contained in a single messag
 
 #### First Frame (Format = `0x1_`) and Consecutive Frames (Format = `0x2_`)
 
-If the packet is larger than 7 bytes the data is split across multiple messages. To save bandwidth we only encode the Length in the First Frame. The remaining data is transfered using Consecutive Frames.
+If the packet is larger than 7 bytes the data is split across multiple messages. To save bandwidth we only encode the Length in the First Frame (Opcode of `1`). The remaining data is transfered using Consecutive Frames (Opcode of `2`).
 
-To ensure data is received in order / without missing messages, each Consecutive frame contains a `Sequence Number`. For each Packet, this 4-bit number starts at `1` and increments with each Consecutive Frame. The receiver should ignore any messages with the incorrect `Sequence Number`. Consecutive Frames must be sent within the Timeout period, incomplete messages are ignored without Acknowledgement.
+To ensure data is received in order and without missing messages, each Consecutive Frame contains a `Sequence Number`. For each Packet, this 4-bit number starts at `1` and increments with each Consecutive Frame. The receiver should ignore any messages with the incorrect `Sequence Number`. Consecutive Frames must be sent within the Timeout period, incomplete messages are ignored without Acknowledgement.
 
 ## Command Layer
 
