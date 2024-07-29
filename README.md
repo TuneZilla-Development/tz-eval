@@ -388,7 +388,7 @@ There are three Opcodes defined by this protocol. Depending on the Opcode, the s
 
 #### Single Frame (Format = `0x0_`)
 
-An Opcode of `0` indicates that the packet is fully contained in a single message frame (ie,. Data is 7 bytes or less). 
+An Opcode of `0` indicates that the packet is fully contained in a single message frame. The length of a Single Frame packet must not exceed the message layer limit of 8 bytes (ie,. Packet Data must be 1 - 7 bytes, or 1 - 6 bytes when using an additional length byte). 
 
 #### First Frame (Format = `0x1_`) and Consecutive Frames (Format = `0x2_`)
 
@@ -498,7 +498,7 @@ The meaning of the `Negative Response Code` (NRC) is as follows:
 ##### Example (Packet Layer Omited):
 ```
 --> 21 04          - WRITE Request (Data Identifier = 0x04)
-<-- 60 04 XX.. CS  - Positive WRITE Response (DataId=0x04, Data=XX.., Checksum=CS)
+<-- 61 04 XX.. CS  - Positive WRITE Response (DataId=0x04, Data=XX.., Checksum=CS)
 ```
 
 #### SEED Request
